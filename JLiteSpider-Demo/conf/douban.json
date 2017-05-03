@@ -1,0 +1,12 @@
+{
+    "workerid" : 1,
+    "mq" : [{
+        "name" : "mq-1",
+        "host" : "localhost",
+        "port" : 5672,
+        "qos" : 3  ,
+        "queue" : "mq-1"
+    }],
+    "sendto" : ["mq-1"],
+    "recvfrom" : ["mq-1"]
+}
