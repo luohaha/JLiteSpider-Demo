@@ -24,7 +24,7 @@ public class DoubanSaver implements Saver {
 
 	@Override
 	public void save(Object result, Map<String, MessageQueue> mQueue) throws IOException {
-		// TODO Auto-generated method stub
+		// 启动下载，并执行回调
 		asyncNetwork.addUrl((String) result, new DefaultCallback(mQueue));
 	}
 
@@ -37,7 +37,7 @@ public class DoubanSaver implements Saver {
 		}
 
 		public void onReceived(String result, String url) {
-			// TODO Auto-generated method stub
+			// 下载成功，则进行解析，并将结果存入文件
 			Document document = Jsoup.parse((String) result);
 			String name = Xsoup.compile("//*[@id=\"content\"]/h1/span[1]/text()").evaluate(document).get();
 			String content = Xsoup.compile("//*[@id=\"link-report\"]/span[1]/text()").evaluate(document).get();
@@ -59,6 +59,7 @@ public class DoubanSaver implements Saver {
 			// TODO Auto-generated method stub
 			System.out.println(exception.getMessage());
 			try {
+				// 如果失败，则重新加入队列，再来一次
 				mQueue.get("mq-1").sendResult(url);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

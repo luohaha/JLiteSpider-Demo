@@ -16,11 +16,12 @@ public class DoubanProcesser implements Processor {
 
 	public void process(Object page, Map<String, MessageQueue> mQueue) throws IOException {
 		// TODO Auto-generated method stub
-		//*[@id="content"]/div/div[1]/div/div/table[2]/
+		// 解析出想要接下去访问的url地址
 		Document document = Jsoup.parse((String) page);
 		List<String> urls = Xsoup.compile("//tbody/tr/td[2]/div/a/@href").evaluate(document).list();
 		urls.forEach(url -> {
 			try {
+				// 将获取到的url地址，发往队列，并打上result标签
 				mQueue.get("mq-1").sendResult(url);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

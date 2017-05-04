@@ -12,8 +12,10 @@ import com.rabbitmq.client.ShutdownSignalException;
 public class DoubanSpider {
 	public static void main(String[] args) {
 		try {
+			// 初始化下载器
 			AsyncNetwork asyncNetwork = new AsyncNetwork();
 			asyncNetwork.begin();
+			// 启动下载进程
 			Spider.create().setDownloader(new DoubanDownloader(asyncNetwork))
 				  .setProcessor(new DoubanProcesser())
 				  .setSaver(new DoubanSaver(asyncNetwork))
